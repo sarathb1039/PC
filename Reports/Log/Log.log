@@ -1,0 +1,12 @@
+INFO - 30-06-2019 18:09:38 - HTML - fnSummaryInitialization - sConfigfilespath = C:\Selenium\PC\Config
+INFO - 30-06-2019 18:10:53 - XlsxReader - addTestCasesFromDataSheetName - Adding TestCaseID = TC7_TN
+INFO - 30-06-2019 18:13:59 - ParallelExecDriver - Parllel1 - Total Number of Threads = 1
+INFO - 30-06-2019 18:13:59 - ParallelExecDriver - Parllel1 - Running test case in Prallel4 = TC7_TN
+INFO - 30-06-2019 18:14:03 - ParallelExecutor - run - Starting Thread Id =13Executing testcase = TC7_TN
+INFO - 30-06-2019 18:14:05 - LocalDriverFactory - createNewDriver - Webdriver with Head Automation started
+INFO - 30-06-2019 18:14:38 - LocalDriverFactory - createNewDriver - 'CH' driver started
+INFO - 30-06-2019 18:14:38 - ParallelExecutor - run - Thread ID = 13 common = com.pc.utilities.Common@f81c35a
+INFO - 30-06-2019 18:14:38 - Common - RunTest - Thread ID = 13 -----------------STARTED RUNNING TEST CASE CreateNewSubmission_HomeOwnersHO6_TN EXECUTION----------------- Thread = 13
+INFO - 30-06-2019 18:14:38 - Common - RunTest - Thread ID = 13---------------Started Executing Login function---------------
+INFO - 30-06-2019 18:14:38 - Common - OpenApp - Thread = 13 Driver = ChromeDriver: chrome on XP (e50bd116830a2febe412dd12a34d0e6f)
+INFO - 30-06-2019 18:14:38 - Common - OpenApp - Browser maximized

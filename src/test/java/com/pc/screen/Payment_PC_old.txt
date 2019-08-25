@@ -1,0 +1,242 @@
+package com.pc.screen;
+import java.util.HashMap;
+import org.apache.log4j.Logger;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+
+import com.pc.constants.PCConstants;
+import com.pc.utilities.Common;
+import com.pc.utilities.CommonManager;
+import com.pc.utilities.HTML;
+import com.pc.utilities.ManagerDriver;
+import com.pc.utilities.PCThreadCache;
+import com.pc.utilities.XlsxReader;
+
+public class Payment_PC {
+	public  XlsxReader sXL; // Excel Read Object
+	public static String sheetname = "Payment_PC";
+	static Logger logger =Logger.getLogger(sheetname);
+	public String accountNumber;
+	public String accountName;
+	public String policynumber;
+	Common common = CommonManager.getInstance().getCommon();
+	
+	/**
+	 * @function Use to perform all the objects/elements/functions from the Create Account excel sheet
+	 * @return true/false
+	 * @throws Exception
+	 */
+	public Boolean SCRPayment_PC() throws Exception{
+
+					Boolean status = true;
+					status = common.ClassComponent(sheetname, Common.o);
+					if(!status)
+					{
+						status = false;
+					}
+					return status;
+	}
+	public boolean ApproveUWIssue(String strIssueDetails) throws Exception
+	{
+		boolean status = false;
+		String value = null;
+		String[] sValue = strIssueDetails.split(":::");
+		
+		status = common.SafeAction(Common.o.getObject("eleRiskAnalysispage"), "YES", "ele");
+		status = common.ActionOnTable(Common.o.getObject("eleIssuesTable"), 1,0, sValue[0],"img");
+		status = common.SafeAction(Common.o.getObject("eleUWApprove"), "YES", "ele");
+		status = common.SafeAction(Common.o.getObject("eleCommonOK"), "YES", "ele");
+		
+		
+		
+		HTML.fnInsertResult(PCThreadCache.getInstance().getProperty("testcasename"), PCThreadCache.getInstance().getProperty("methodName"), "Validate UserName field value", "Value in UserName field -" +value, "PASS");
+		
+		return status;
+	}
+	
+	public boolean UpdatePolicyNumber() throws Exception
+	{
+		HashMap<String,Object> updateColumnNameValues = new HashMap<String,Object>();
+		HashMap<String,Object> whereConstraint = new HashMap<String,Object>();
+		XlsxReader sXL = XlsxReader.getInstance();
+		common.WaitForElementExist(Common.o.getObject("elePolicyNumberText"), Integer.valueOf(HTML.properties.getProperty("LONGWAIT")));
+		policynumber = common.ReadElement(Common.o.getObject("elePolicyNumberText"), Integer.valueOf(HTML.properties.getProperty("LONGWAIT")));
+		policynumber = policynumber.substring(19, 31);
+		logger.info("Submission Created ::Submission Number '" +policynumber+ "'");
+		PCThreadCache.getInstance().setProperty(PCConstants.CACHE_POLICY_NUMBER, policynumber);
+		updateColumnNameValues.put(PCConstants.PolicyNumber, policynumber);
+		whereConstraint.put(PCConstants.ID, PCThreadCache.getInstance().getProperty("TCID"));
+		sXL.executeUpdateQuery(PCConstants.SHEET_TestData,  updateColumnNameValues,  whereConstraint );
+		//Marking objects for Garbage collection
+		HTML.fnInsertResult(PCThreadCache.getInstance().getProperty("testcasename"), PCThreadCache.getInstance().getProperty("methodName"), "Update the PolicyNumber in Test Dat sheet", "Update the PolicyNumber-" +policynumber, "PASS");
+		whereConstraint = null;
+		updateColumnNameValues = null;
+		common.SafeAction(Common.o.getObject("elePolicyNumberText"), "elePolicyNumberText", "ele");
+		return true;
+	}
+	
+	public boolean SelectPaymentPlan(String strIssueDetails) throws Exception
+	{
+		boolean status = false;
+		String value = null;
+		String[] sValue = strIssueDetails.split(":::");
+	
+		String xpathID = "//td[div[normalize-space(text())='" +sValue[0]+ "']]//preceding-sibling::td//div//div";
+		ManagerDriver.getInstance().getWebDriver().findElement(By.xpath(xpathID)).sendKeys(Keys.SPACE);
+		Thread.sleep(2000);
+		status = true;
+		logger.info("Selected Payment Plan'" + sValue[0] + "'");
+		HTML.fnInsertResult(PCThreadCache.getInstance().getProperty("testcasename"), PCThreadCache.getInstance().getProperty("methodName"), "Select Payment Plan"+ sValue[0], "Value in UserName field -" +sValue[0], "PASS");
+		
+		return status;
+	}
+	
+	public boolean ChangePolicyIssuance() throws Exception
+	{
+		boolean status = false;
+		
+		
+		
+////status = common.SafeAction(Common.o.getObject("eleFullAPP"), "YES", "ele");
+//
+//		if(strBind[1].equals("Personal Auto"))
+//		{
+//			status = common.SafeAction(Common.o.getObject("Reports"), "YES", "ele");
+//			status = common.SafeAction(Common.o.getObject("eleLossesAndViolations"), "YES", "ele");
+//		status = common.SafeAction(Common.o.getObject("btnOrderAutoLossHist"), "YES", "ele");
+//		status=common.SelectCheckBoxOnTableBasedonRowColIndex(By.xpath(".//div[contains(@id,'MVRReportLV-body')]")," ",0,0);
+//		status = common.SafeAction(Common.o.getObject("Order/RetrieveMVR"), "YES", "ele");
+//		}
+//
+//
+//status = common.SafeAction(Common.o.getObject("eleProceedtoBind"), "YES", "ele");
+//status = common.SafeAction(Common.o.getObject("elePRQuote"), "YES", "ele");
+//		
+//		
+		
+		status = common.SafeAction(Common.o.getObject("elePaymentPC"), "YES", "ele");
+		status = common.SafeAction(Common.o.getObject("btnCPIssuePolicy"), "YES", "btn");
+		
+		status = common.SafeAction(Common.o.getObject("eleCommonOK"), "YES", "ele");
+		
+		Thread.sleep(5000);
+		for(int i = 0; i <= 100; i++)
+		{
+		
+		try {
+			if (ManagerDriver.getInstance().getWebDriver().findElement(Common.o.getObject("eleDetails")).isDisplayed()	==true) {
+				System.out.println("clicked on detail" + i);
+				Thread.sleep(5000);
+				status = common.SafeAction(Common.o.getObject("eleDetails"), "YES", "ele");
+				status = common.ApproveUWIssueTable("IssueTable");
+				status = common.SafeAction(Common.o.getObject("elePaymentPC"), "YES", "ele");
+				status = common.SafeAction(Common.o.getObject("btnCPIssuePolicy"), "YES", "btn");
+				
+				status = common.SafeAction(Common.o.getObject("eleCommonOK"), "YES", "ele");
+				
+			}
+			//		if(ManagerDriver.getInstance().getWebDriver().findElement(Common.o.getObject("elePaymentBindOptions")).isDisplayed())
+			//		{ || ManagerDriver.getInstance().getWebDriver().findElement(Common.o.getObject("elePaymentBindOptions")).isDisplayed()
+			//			System.out.println("Clicked on payment options" + i);
+			//			
+			//			status = common.SafeAction(Common.o.getObject("elePaymentPC"), "YES", "ele");
+			//			status = common.SafeAction(Common.o.getObject("elePaymentBindOptions"), "YES", "ele");
+			//			status = common.SafeAction(Common.o.getObject("ele"+strBind), "YES", "ele");
+			//			status = common.SafeAction(Common.o.getObject("eleCommonOK"), "YES", "ele");
+			//			break; 
+			////			if(ManagerDriver.getInstance().getWebDriver().findElement(Common.o.getObject("elePolicyNumberText")).isDisplayed())
+			////				{
+			////					break;
+			////				}	
+			//			
+			//		}
+		} catch (Exception e) {
+			//status = common.SafeAction(Common.o.getObject("elePolicyNumberText"), "YES", "ele");
+			status=true;
+			break;
+		}	
+		}
+		if (status==true)
+		{
+			HTML.fnInsertResult(PCThreadCache.getInstance().getProperty("testcasename"), PCThreadCache.getInstance().getProperty("methodName"), "Successfully clicked Bind Only", "Successfully clicked Bind Only", "PASS");			
+		}
+		else
+		{
+			HTML.fnInsertResult(PCThreadCache.getInstance().getProperty("testcasename"), PCThreadCache.getInstance().getProperty("methodName"), "Failed to click Bind Only", "Failed to click Bind Only", "FAIL");			
+		}
+		
+		
+		return status;
+	}
+	
+	public boolean PolicyIssuance(String strBind1) throws Exception
+	{
+		boolean status = false;
+		String[] strBind = strBind1.split(":::");
+		
+		status = common.SafeAction(Common.o.getObject("eljPaymentPC"), "eljPaymentPC", "ele");
+		status = common.SafeAction(Common.o.getObject("elePaymentBindOptions"), "elePaymentBindOptions", "elePaymentBindOptions");
+		status = common.SafeAction(Common.o.getObject("elj"+strBind[0]), "elj"+strBind[0], "elj"+strBind[0]);
+			
+		
+		//status = common.SafeAction(Common.o.getObject("eleCommonOK"), "elePaymentPC", "ele");
+		System.out.println(status);
+		Thread.sleep(5000);
+		try // Need to reopen this try/catch block after testing
+		{
+			for(int i = 0; i<10; i++)
+			{
+				System.out.println("Check " + i);
+				
+			if (ManagerDriver.getInstance().getWebDriver().findElement(Common.o.getObject("eleDetails")).isDisplayed()==true) 
+			{
+				System.out.println("details button is displayed");
+				Thread.sleep(5000);
+				
+				status = common.SafeAction(Common.o.getObject("eleDetails"), "eleDetails", "eleDetails");
+				status = common.ApproveUWIssueTable("IssueTable");
+				status = common.SafeAction(Common.o.getObject("elePaymentPC"), "elePaymentPC", "elePaymentPC");
+				status = common.SafeAction(Common.o.getObject("elePaymentBindOptions"), "elePaymentBindOptions", "elePaymentBindOptions");
+				System.out.println(strBind1);
+				status = common.SafeAction(Common.o.getObject("elj" + strBind1), "elj" + strBind1, "elj" + strBind1);
+				//status = common.SafeAction(Common.o.getObject("eleCommonOK"), "YES", "ele");
+				System.out.println("UWI issues completed");
+			}
+			else if(ManagerDriver.getInstance().getWebDriver().findElement(Common.o.getObject("elePaymentBindOptions")).isEnabled()==true && ManagerDriver.getInstance().getWebDriver().findElement(Common.o.getObject("elePaymentBindOptions")).isDisplayed()==true)
+			{
+					status = common.SafeAction(Common.o.getObject("elePaymentPC"), "elePaymentPC", "elePaymentPC");
+					status = common.SafeAction(Common.o.getObject("elePaymentBindOptions"), "elePaymentBindOptions", "elePaymentPC");
+					status = common.SafeAction(Common.o.getObject("elj"+strBind[0]), "elj"+strBind[0], "elj"+strBind[0]);
+			}
+			else if(ManagerDriver.getInstance().getWebDriver().findElement(Common.o.getObject("elePolicyNumberText")).isDisplayed()==true)
+			{
+				status = true;
+				System.out.println("Status " +status+ "End");
+				break;
+			}
+			
+		}
+		
+		
+		} catch (Exception e) {
+			//status = common.SafeAction(Common.o.getObject("elePolicyNumberText"), "YES", "ele");
+			//e.getMessage();
+			status=true;
+			return true;	
+		}
+		//status = common.SafeAction(Common.o.getObject("elePolicyNumberText"), "elePolicyNumberText", "ele");
+		
+		
+		if (status==true)
+		{
+			HTML.fnInsertResult(PCThreadCache.getInstance().getProperty("testcasename"), PCThreadCache.getInstance().getProperty("methodName"), "Successfully clicked Bind Only", "Successfully clicked Bind Only", "PASS");			
+		}
+		else
+		{
+			HTML.fnInsertResult(PCThreadCache.getInstance().getProperty("testcasename"), PCThreadCache.getInstance().getProperty("methodName"), "Failed to click Bind Only", "Failed to click Bind Only", "FAIL");			
+		}
+		
+		return status;
+	}
+	
+}

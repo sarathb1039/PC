@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" total="1" passed="1">
+  <reporter-output>
+  </reporter-output>
+  <suite name="TestAll" duration-ms="216902" started-at="2019-06-30T12:16:35Z" finished-at="2019-06-30T12:20:11Z">
+    <groups>
+    </groups>
+    <test name="PC" duration-ms="216902" started-at="2019-06-30T12:16:35Z" finished-at="2019-06-30T12:20:11Z">
+      <class name="com.pc.driver.ParallelExecDriver">
+        <test-method status="PASS" signature="loadConfig()[pri:0, instance:com.pc.driver.ParallelExecDriver@12c8a2c0]" name="loadConfig" is-config="true" duration-ms="83250" started-at="2019-06-30T17:45:11Z" finished-at="2019-06-30T17:46:35Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- loadConfig -->
+        <test-method status="PASS" signature="Parllel1(java.lang.String, java.lang.String)[pri:1, instance:com.pc.driver.ParallelExecDriver@12c8a2c0]" name="Parllel1" duration-ms="216556" started-at="2019-06-30T17:46:35Z" finished-at="2019-06-30T17:50:11Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Data_Regression]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- Parllel1 -->
+        <test-method status="FAIL" signature="exitConfig()[pri:0, instance:com.pc.driver.ParallelExecDriver@12c8a2c0]" name="exitConfig" is-config="true" duration-ms="0" started-at="2019-06-30T17:50:13Z" finished-at="2019-06-30T17:50:13Z">
+          <exception class="java.lang.IllegalStateException">
+            <message>
+              <![CDATA[The path to the driver executable must be set by the webdriver.ie.driver system property; for more information, see https://github.com/SeleniumHQ/selenium/wiki/InternetExplorerDriver. The latest version can be downloaded from http://selenium-release.storage.googleapis.com/index.html]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.lang.IllegalStateException: The path to the driver executable must be set by the webdriver.ie.driver system property; for more information, see https://github.com/SeleniumHQ/selenium/wiki/InternetExplorerDriver. The latest version can be downloaded from http://selenium-release.storage.googleapis.com/index.html
+	at com.google.common.base.Preconditions.checkState(Preconditions.java:738)
+	at org.openqa.selenium.remote.service.DriverService.findExecutable(DriverService.java:124)
+	at org.openqa.selenium.ie.InternetExplorerDriverService.access$000(InternetExplorerDriverService.java:32)
+	at org.openqa.selenium.ie.InternetExplorerDriverService$Builder.findDefaultExecutable(InternetExplorerDriverService.java:167)
+	at org.openqa.selenium.remote.service.DriverService$Builder.build(DriverService.java:330)
+	at org.openqa.selenium.ie.InternetExplorerDriver.setupService(InternetExplorerDriver.java:288)
+	at org.openqa.selenium.ie.InternetExplorerDriver.<init>(InternetExplorerDriver.java:210)
+	at org.openqa.selenium.ie.InternetExplorerDriver.<init>(InternetExplorerDriver.java:154)
+	at com.pc.utilities.HTML.fnSummaryCloseHtml(HTML.java:533)
+	at com.pc.driver.ParallelExecDriver.exitConfig(ParallelExecDriver.java:113)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:85)
+	at org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:510)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:211)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:138)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:329)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:261)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1215)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+	at org.testng.TestNG.run(TestNG.java:1048)
+	at com.pc.driver.TestNGRunner.main(TestNGRunner.java:45)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.IllegalStateException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- exitConfig -->
+      </class> <!-- com.pc.driver.ParallelExecDriver -->
+    </test> <!-- PC -->
+  </suite> <!-- TestAll -->
+</testng-results>

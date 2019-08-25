@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite thread-count="6" name="Failed suite [TestAll]" parallel="methods">
+  <parameter name="DataSheetName" value="Data"/>
+  <parameter name="Region" value=""/>
+  <test name="PC(failed)" parallel="methods">
+    <parameter name="DataSheetName" value="Data"/>
+    <parameter name="Region" value=""/>
+    <classes>
+      <class name="com.pc.driver.ParallelRegressionExecDriver">
+        <methods>
+          <include name="Parllel3"/>
+          <include name="Parllel1"/>
+          <include name="Parllel4"/>
+          <include name="Parllel7"/>
+          <include name="Parllel2"/>
+          <include name="Parllel5"/>
+          <include name="Parllel8"/>
+          <include name="Parllel6"/>
+          <include name="loadConfig"/>
+          <include name="Parllel9"/>
+          <include name="Parllel10"/>
+        </methods>
+      </class> <!-- com.pc.driver.ParallelRegressionExecDriver -->
+    </classes>
+  </test> <!-- PC(failed) -->
+</suite> <!-- Failed suite [TestAll] -->
